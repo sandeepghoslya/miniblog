@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+<div>
+<h3>Dashboard/ Add Posts</h3>
+ <form action="" method="post" novalidate>
+     {% csrf_token %}
+     {{form.as_p}}
+     <input type="submit" value="Add">
+     <a href="{% url 'dashboard' %}"></a>
+ </form>
+</div>
+{% endblock content %}

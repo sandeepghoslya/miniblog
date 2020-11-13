@@ -1,0 +1,64 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+{% block msg %}
+{% if messages %}
+{% for message in messages %}
+<div{% if message.tags %}{{message.tags}} {% endif %}>
+    <strong>{{message}}</strong>
+    <button type="button">
+    <span>&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock msg %}
+
+{% block side %}
+<div>
+    <h4>Profile</h4>
+    <h5>{{full_name}}</h5>
+    {% for group in groups %}
+       <p>{{group.name}}</p>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+  <div>
+<h3>Dashboard page</h3>
+ <a href="{% url 'addpost' %}">Add Post</a>
+<h4>Show Post Information</h4>
+      {% if posts %}
+      <table>
+          <thead>
+          <tr>
+              <th>Id</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for post in posts %}
+          <tr>
+              <th>{{post.id}}</th>
+              <td>{{post.title}}</td>
+              <td>{{post.desc}}</td>
+              <td>
+               <a href="{% url 'updatepost' post.id %}">Edit</a>
+              {% if perms.blog.delete_post %}
+              <form action="{% url 'deletepost'  post.id %}" method="post">
+                  {% csrf_token %}
+               <input type="submit" value="Delete">
+              </form>
+              {% endif %}
+              </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+      {% endif %}
+</div>
+{% endblock content %}

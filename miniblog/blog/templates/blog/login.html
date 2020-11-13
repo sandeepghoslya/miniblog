@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+
+<div>
+<h3>login page</h3>
+ <form action="" method="post">
+   {% csrf_token %}
+     {% for fm in form %}
+     <div>
+         {{fm.label_tag}} {{fm}} <small>{{fm.error | striptags}}</small>
+     </div>
+     {% endfor %}
+     <input type="submit" value="login">
+     {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+     <p>{{error}}</p>
+     {% endfor %}
+     {% endif %}
+ </form>
+
+
+</div>
+{% endblock content %}
